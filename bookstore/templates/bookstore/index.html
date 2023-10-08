@@ -11,11 +11,13 @@
         <tr>
             <th>Title</th>
             <th>Price</th>
+            <th>Author</th>
         </tr>
         {% for b in books %}
         <tr>
             <td>{{b.title}}</td>
             <td>{{b.price}}€</td>
+            <td>{{b.author.name}}</td>
         </tr>
         {% endfor %}
     </table>
