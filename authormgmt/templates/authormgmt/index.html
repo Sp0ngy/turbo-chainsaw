@@ -5,6 +5,23 @@
     <title>Title</title>
 </head>
 <body>
-  <p>Currently there are no authors to display</p>
+{% if authors %}
+    <p>Authors available:</p>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Birthday</th>
+        </tr>
+        {% for a in authors %}
+        <tr>
+            <td>{{a.name}}</td>
+            <td>{{a.birthday}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+ <p>Currently there are no authors to display</p>
+{% endif %}
+
 </body>
 </html>
