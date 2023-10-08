@@ -2,9 +2,9 @@ version: "3.9"
 services:
     web:
         build: .
-        command: python /code/manage.py runserver 0.0.0.0:8000
+        command: /code/run.sh
         volumes:
-            - code:/code
+            - .:/code
         ports:
             - 8000:8000
         depends_on:
@@ -26,4 +26,3 @@ services:
 volumes:
         postgres_data:
         data:
-        code:
