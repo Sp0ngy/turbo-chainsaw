@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
-    'bookstore.apps.BookstoreConfig'
+    'bookstore.apps.BookstoreConfig',
+    'authormgmt.apps.AuthormgmtConfig'
 ]
 
 MIDDLEWARE = [
