@@ -1,7 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from .models import Book
+
 
 # Create your views here.
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the bookstore index.")
+    books = list(Book.objects.order_by("-title"))
+    # output = "\n".join([f"{b.title} {b.price}" for b in books])
+    context = {"books": books}
+    return render(request, "bookstore/index.html", context)

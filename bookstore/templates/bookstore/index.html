@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% if books %}
+    <p>Books available:</p>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Price</th>
+        </tr>
+        {% for b in books %}
+        <tr>
+            <td>{{b.title}}</td>
+            <td>{{b.price}}€</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% else %}
+ <p>No books available</p>
+{% endif %}
+
+</body>
+</html>
