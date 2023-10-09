@@ -5,4 +5,4 @@ from django.db import models
 class Book(models.Model):
     title = models.CharField(max_length=200)
     price = models.IntegerField()
-    author = models.ForeignKey("authormgmt.Athor", on_delete=models.SET_NULL, null=True)
+    author = models.ForeignKey("authormgmt.Author", on_delete=models.SET_NULL, null=True)
