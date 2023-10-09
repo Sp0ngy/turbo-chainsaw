@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Athor
+from .models import Author
 
 # Register your models here.
 
-admin.site.register(Athor)
+admin.site.register(Author)

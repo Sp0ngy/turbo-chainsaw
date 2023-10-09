@@ -3,7 +3,7 @@ from datetime import datetime
 from django.db import migrations
 
 def seed(apps, schema_editor):
-    Author = apps.get_model("authormgmt", "Athor") # NOTE: This also contains the typo that represents a mistake!
+    Author = apps.get_model("authormgmt", "Author") # NOTE: This also contains the typo that represents a mistake!
     db_alias = schema_editor.connection.alias
     Author.objects.using(db_alias).bulk_create(
         [
