@@ -1,0 +1,4 @@
+services:
+  web:
+    image: ghcr.io/sp0ngy/turbo-chainsaw:develop
+    build: !reset null
