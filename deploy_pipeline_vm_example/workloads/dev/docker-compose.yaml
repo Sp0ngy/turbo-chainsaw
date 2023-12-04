@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:14
+    volumes:
+      - /data/db_dev:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=chainsaw
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  web:
+    image: ghcr.io/sp0ngy/turbo-chainsaw:develop
+    labels:
+      - "docker-compose-watcher.watch=1"
+      - "docker-compose-watcher.dir=/root/workloads/dev"
+    command: ./run.sh
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db

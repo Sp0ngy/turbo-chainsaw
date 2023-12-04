@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:14
+    volumes:
+      - /data/db_dev:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=chainsaw
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  web:
+    image: ghcr.io/sp0ngy/turbo-chainsaw:prod
+    command: ./run.sh
+    ports:
+      - "8001:8000"
+    depends_on:
+      - db
