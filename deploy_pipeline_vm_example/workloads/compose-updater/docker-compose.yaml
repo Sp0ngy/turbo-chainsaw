@@ -1,0 +1,12 @@
+version: '3'
+services:
+  watcher:
+    image: virtualzone/compose-updater
+    restart: always
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "/root/workloads:/home/docker:ro"
+      # Mount repository configuration (including http(s) settings and credentials) from the host to the container (assuming the host user is called ubuntu)
+      - "/root/.docker/config.json:/root/.docker/config.json:ro"
+    environment:
+      INTERVAL: 5
