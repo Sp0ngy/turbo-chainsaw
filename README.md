@@ -18,5 +18,6 @@ In our case it is pointing to another local VM for stageing purposes (via Vagran
 
 Example:
 ```
+sudo docker compose -f docker-compose.prod.yml pull web
 sudo docker compose -f docker-compose.prod.yml up -d
 ```
