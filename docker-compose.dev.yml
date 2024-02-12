@@ -16,7 +16,6 @@ services:
         environment:
             - "POSTGRES_PASSWORD=curiescience"
             - "POSTGRES_HOST_AUTH_METHOD=trust"
-        
 
 volumes:
         postgres_data:

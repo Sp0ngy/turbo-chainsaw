@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'bookstore.apps.BookstoreConfig',
-    'authormgmt.apps.AuthormgmtConfig'
+    'authormgmt.apps.AuthormgmtConfig',
+    'ehr.apps.EhrConfig'
 ]
 
 MIDDLEWARE = [
