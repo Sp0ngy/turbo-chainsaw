@@ -40,7 +40,11 @@ INSTALLED_APPS = [
     'users',
     'bookstore.apps.BookstoreConfig',
     'authormgmt.apps.AuthormgmtConfig',
-    'ehr.apps.EhrConfig'
+    'ehr.apps.EhrConfig',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.openid_connect'
 ]
 
 MIDDLEWARE = [
@@ -51,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'django_project.urls'
@@ -131,3 +136,33 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+
+]
+
+SITE_ID = 1
+
+# Provider specific settings
+SOCIALACCOUNT_PROVIDERS = {
+    "openid_connect": {
+        "APPS": [
+            {
+                "provider_id": "keycloak",
+                "name": "Keycloak",
+                "client_id": "testclient",
+                "secret": "rLWlifomNO5BsLCtG8lL0FFt7Vq8Se3C",
+                "settings": {
+                    "server_url": "http://host.docker.internal:8080/realms/testclient/.well-known/openid-configuration",  # This is the docker internal port, only for dev not production
+                },
+            }
+        ]
+    }
+}
+
+LOGIN_REDIRECT_URL = '/users/show-username'
