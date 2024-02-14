@@ -6,13 +6,7 @@ from zeep import Client
 from .models import Patient
 from ehr.forms.forms import StringForm
 
-
 gPAS_domain_name = 'TurboChainsaw'
-
-def index(request):
-    patients = list(Patient.objects.all())
-    context = {"patients": patients}
-    return render(request, "ehr/index.html", context)
 
 def pseudonymize_data(request):
     # Ensure this is a POST request with necessary data
