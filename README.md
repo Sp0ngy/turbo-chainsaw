@@ -21,3 +21,8 @@ Example:
 sudo docker compose -f docker-compose.prod.yml pull web
 sudo docker compose -f docker-compose.prod.yml up -d
 ```
+
+## gPAS
+- admin interface available under `http:\\localhost:8081\gpas-web`
+- for initial setup create new `Domäne` and adjust in `ehr.views`
+- test app interfaces available under `http:\\localhost:8000\pseudonymize` and `http:\\localhost:8000\de-pseudonymize`

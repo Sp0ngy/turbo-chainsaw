@@ -1,4 +1,4 @@
 Django==4.2.6
 psycopg2-binary==2.9.9
 zeep==4.1.0
-django-allauth
+mozilla_django_oidc==4.0.0
