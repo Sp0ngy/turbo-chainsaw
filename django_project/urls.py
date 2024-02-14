@@ -20,6 +20,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('bookstore/', include("bookstore.urls")),
     path('authors/', include("authormgmt.urls")),
+    path('', include('users.urls')),
+    path('', include('mozilla_django_oidc.urls')),
     path('ehr/', include("ehr.urls")),
-    path('users/', include('users.urls'))
 ]

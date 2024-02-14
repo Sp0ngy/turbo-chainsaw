@@ -3,4 +3,6 @@ from users.models import User
 
 admin.site.register(User)
 
-# Register your models here.
+from users.models import User
+
+admin.site.register(User)

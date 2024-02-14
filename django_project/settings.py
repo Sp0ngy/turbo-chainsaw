@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'mozilla_django_oidc',  # Load after auth
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -132,7 +133,37 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
 
-AUTHENTICATION_BACKENDS = [
-    # Needed to login by username in Django admin, regardless of `allauth`
+# Add 'mozilla_django_oidc' authentication backend
+AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-]
+    'users.auth.OIDCAuthenticationBackend',
+)
+
+# https://phasetwo.io/blog/secure-django/#setting-up-a-keycloak-instance
+# OIDC Configuration
+OIDC_RP_CLIENT_ID = 'turbo'
+OIDC_RP_CLIENT_SECRET = 'ptUYeU4J2OaXhda0dY7i5uJaNw5LLd4y'
+
+OIDC_REALM = 'master'
+OIDC_HOST = 'http://host.docker.internal:8080'
+
+OIDC_OP_AUTHORIZATION_ENDPOINT = os.getenv('OIDC_OP_AUTHORIZATION_ENDPOINT',
+    f'{OIDC_HOST}/realms/{OIDC_REALM}/protocol/openid-connect/auth')
+OIDC_OP_TOKEN_ENDPOINT = os.getenv('OIDC_OP_TOKEN_ENDPOINT',
+    f'{OIDC_HOST}/realms/{OIDC_REALM}/protocol/openid-connect/token')
+OIDC_OP_USER_ENDPOINT = os.getenv('OIDC_OP_USER_ENDPOINT',
+    f'{OIDC_HOST}/realms/{OIDC_REALM}/protocol/openid-connect/userinfo')
+OIDC_OP_JWKS_ENDPOINT = os.getenv('OIDC_OP_JWKS_ENDPOINT',
+    f'{OIDC_HOST}/realms/{OIDC_REALM}/protocol/openid-connect/certs')
+OIDC_OP_LOGOUT_ENDPOINT = os.getenv('OIDC_OP_LOGOUT_ENDPOINT',
+    f'{OIDC_HOST}/realms/{OIDC_REALM}/protocol/openid-connect/logout')
+
+OIDC_OP_LOGOUT_URL_METHOD = 'users.utils.oidc_op_logout'
+OIDC_USERNAME_ALGO = 'users.utils.generate_username'
+OIDC_RP_SIGN_ALGO = 'RS256'
+OIDC_RP_SCOPES = 'openid email'
+OIDC_STORE_ID_TOKEN = True
+
+LOGIN_URL = 'oidc_authentication_init'
+LOGIN_REDIRECT_URL = '/show-username'
+LOGOUT_REDIRECT_URL = '/auth'
