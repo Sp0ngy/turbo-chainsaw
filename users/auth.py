@@ -11,7 +11,7 @@ class OIDCAuthenticationBackend(auth.OIDCAuthenticationBackend):
         user.last_name = claims.get('family_name', '')
         user.email = claims.get('email')
         user.save()
-
+        self._assign_roles_to_user(user, claims)
         self.update_groups(user, claims)
 
         return user
@@ -21,9 +21,13 @@ class OIDCAuthenticationBackend(auth.OIDCAuthenticationBackend):
         user.last_name = claims.get('family_name', '')
         user.email = claims.get('email')
         user.save()
+        self._assign_roles_to_user(user, claims)
         self.update_groups(user, claims)
 
         return user
+
+
+    # TODO: add delete_user method
 
     def update_groups(self, user, claims):
         """
@@ -48,3 +52,13 @@ class OIDCAuthenticationBackend(auth.OIDCAuthenticationBackend):
 
         userinfo['roles'] = roles
         return userinfo
+
+    def _assign_roles_to_user(self, user, claims):
+        roles = claims.get('roles', [])
+        if 'admin' in roles or 'superuser' in roles:
+            user.is_staff = True
+            user.is_superuser = True
+        else:
+            user.is_staff = False
+            user.is_superuser = False
+        user.save()

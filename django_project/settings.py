@@ -135,14 +135,14 @@ AUTH_USER_MODEL = 'users.User'
 
 # Add 'mozilla_django_oidc' authentication backend
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
+    #'django.contrib.auth.backends.ModelBackend', Admin user needs to log in through keycloak
     'users.auth.OIDCAuthenticationBackend',
 )
 
 # https://phasetwo.io/blog/secure-django/#setting-up-a-keycloak-instance
 # OIDC Configuration
 OIDC_RP_CLIENT_ID = 'turbo'
-OIDC_RP_CLIENT_SECRET = 'ptUYeU4J2OaXhda0dY7i5uJaNw5LLd4y'
+OIDC_RP_CLIENT_SECRET = 'iBMfmUmXniTh3rei7shTIEB5R8avbDBi'
 
 OIDC_REALM = 'master'
 OIDC_HOST = 'http://host.docker.internal:8080'
