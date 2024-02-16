@@ -145,7 +145,7 @@ OIDC_RP_CLIENT_ID = 'turbo'
 OIDC_RP_CLIENT_SECRET = 'iBMfmUmXniTh3rei7shTIEB5R8avbDBi'
 
 OIDC_REALM = 'master'
-OIDC_HOST = 'http://host.docker.internal:8080'
+OIDC_HOST = 'http://localhost:8080'
 
 OIDC_OP_AUTHORIZATION_ENDPOINT = os.getenv('OIDC_OP_AUTHORIZATION_ENDPOINT',
     f'{OIDC_HOST}/realms/{OIDC_REALM}/protocol/openid-connect/auth')
@@ -162,7 +162,7 @@ OIDC_OP_LOGOUT_URL_METHOD = 'users.utils.oidc_op_logout'
 OIDC_USERNAME_ALGO = 'users.utils.generate_username'
 OIDC_RP_SIGN_ALGO = 'RS256'
 OIDC_RP_SCOPES = 'openid email'
-OIDC_STORE_ID_TOKEN = True
+OIDC_STORE_ID_TOKEN = True  #TODO: include First Name and Last Name, not allowed in BSI TR-...
 
 LOGIN_URL = 'oidc_authentication_init'
 LOGIN_REDIRECT_URL = '/show-username'
