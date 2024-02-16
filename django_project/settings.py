@@ -142,10 +142,10 @@ AUTHENTICATION_BACKENDS = (
 # https://phasetwo.io/blog/secure-django/#setting-up-a-keycloak-instance
 # OIDC Configuration
 OIDC_RP_CLIENT_ID = 'turbo'
-OIDC_RP_CLIENT_SECRET = 'iBMfmUmXniTh3rei7shTIEB5R8avbDBi'
+OIDC_RP_CLIENT_SECRET = 'y4SPiSpCC5cKBA7oc8E9SNtcxfMCTP2E'
 
 OIDC_REALM = 'master'
-OIDC_HOST = 'http://localhost:8080'
+OIDC_HOST = 'http://iam.curiescience.com:8080'
 
 OIDC_OP_AUTHORIZATION_ENDPOINT = os.getenv('OIDC_OP_AUTHORIZATION_ENDPOINT',
     f'{OIDC_HOST}/realms/{OIDC_REALM}/protocol/openid-connect/auth')

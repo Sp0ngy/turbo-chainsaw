@@ -21,6 +21,8 @@ Example:
 sudo docker compose -f docker-compose.prod.yml pull web
 sudo docker compose -f docker-compose.prod.yml up -d
 ```
+## Network
+- edit `/etc/hosts` file and add the forwarding form the docker name to the localhost ip, e.g. `127.0.0.1 iam.curiescience.com`
 
 ## Keycloak auth
 - `mozilla-django-oidc` library is an OpenID Connect adapter

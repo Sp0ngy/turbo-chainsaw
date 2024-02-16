@@ -16,7 +16,7 @@ services:
         environment:
             - "POSTGRES_PASSWORD=curiescience"
             - "POSTGRES_HOST_AUTH_METHOD=trust"
-    keycloak:
+    iam.curiescience.com:
         image: quay.io/keycloak/keycloak:23.0.6
         ports:
             - "8080:8080"
