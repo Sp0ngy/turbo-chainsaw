@@ -3,11 +3,12 @@ from django.http import JsonResponse
 
 from zeep import Client
 
-from .models import Patient
 from ehr.forms.forms import StringForm
+from users.decorators import requires_scopes
 
 gPAS_domain_name = 'TurboChainsaw'
 
+@requires_scopes('ehr.pseudo.rwx')
 def pseudonymize_data(request):
     # Ensure this is a POST request with necessary data
     pseudonymized_data = ''
@@ -36,7 +37,7 @@ def pseudonymize_data(request):
 
     return render(request, 'ehr/pseudonymize.html', {'form': form, 'pseudonymized_data': pseudonymized_data})
 
-
+@requires_scopes('ehr.pseudo.rwx')
 def de_pseudonymize_data(request):
     de_pseudonymized_data = ''
     if request.method == "POST":

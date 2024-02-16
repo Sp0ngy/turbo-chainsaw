@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'users.middleware.OIDCAuthorizationMiddleware',   # Can be an option to restrict all requests to authorized users, but needs to exempt login
 ]
 
 ROOT_URLCONF = 'django_project.urls'
@@ -162,7 +163,7 @@ OIDC_OP_LOGOUT_URL_METHOD = 'users.utils.oidc_op_logout'
 OIDC_USERNAME_ALGO = 'users.utils.generate_username'
 OIDC_RP_SIGN_ALGO = 'RS256'
 OIDC_RP_SCOPES = 'openid email'
-OIDC_STORE_ID_TOKEN = True  #TODO: include First Name and Last Name, not allowed in BSI TR-...
+OIDC_STORE_ACCESS_TOKEN = True
 
 LOGIN_URL = 'oidc_authentication_init'
 LOGIN_REDIRECT_URL = '/show-username'

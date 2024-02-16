@@ -2,8 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from users.decorators import requires_scopes
 
-@login_required
+# @login_required
+@requires_scopes('')
 def show_username(request):
     # Get the username of the authenticated user
     username = request.user.username
