@@ -5,10 +5,11 @@ from zeep import Client
 
 from ehr.forms.forms import StringForm
 from users.decorators import requires_scopes
+from django_project.permissions import GlobalPermissions as gb
 
 gPAS_domain_name = 'TurboChainsaw'
 
-@requires_scopes('ehr.pseudo.rwx')
+@requires_scopes(gb.EHR_PSEUDO_RWX)
 def pseudonymize_data(request):
     # Ensure this is a POST request with necessary data
     pseudonymized_data = ''
@@ -37,7 +38,7 @@ def pseudonymize_data(request):
 
     return render(request, 'ehr/pseudonymize.html', {'form': form, 'pseudonymized_data': pseudonymized_data})
 
-@requires_scopes('ehr.pseudo.rwx')
+@requires_scopes(gb.EHR_PSEUDO_RWX)
 def de_pseudonymize_data(request):
     de_pseudonymized_data = ''
     if request.method == "POST":
