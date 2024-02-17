@@ -3,7 +3,7 @@ import jwt
 import requests
 from functools import wraps
 from django_project.settings import OIDC_OP_TOKEN_ENDPOINT, OIDC_RP_CLIENT_ID, OIDC_RP_CLIENT_SECRET
-from django_project.permissions import is_valid_permission
+from django_project.permissions import is_valid_scope
 
 def requires_scopes(*required_scopes):
     # # TODO: check as middelware, that each view has a scope, when accessed.
@@ -13,7 +13,7 @@ def requires_scopes(*required_scopes):
     def decorator(view_func):
         @wraps(view_func)
         def _wrapped_view(request, *args, **kwargs):
-            if not all(is_valid_permission(scope) for scope in required_scopes):
+            if not all(is_valid_scope(scope) for scope in required_scopes):
                 raise ValueError("Invalid scope.")
 
             access_token = request.session.get('oidc_access_token')

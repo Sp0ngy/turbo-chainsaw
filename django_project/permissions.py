@@ -20,13 +20,14 @@ Each permission should be granted carefully, considering the principle of least 
 """
 
 
-class GlobalPermissions(Enum):
-    EHR_PSEUDO_RWX = 'ehr.pseudo.rwx'
-    EHR_PSEUDO_R = 'ehr.pseudo.r'
-    USERS_NAME_R = 'users.name.r'
+class GlobalsScopes(Enum):
+    EHR_READ = 'ehr.read'
+    EHR_WRITE = 'ehr.write'
+    EHR_DELETE = 'ehr.delete'
+    USERS_READ = 'users.read'
 
-def is_valid_permission(permission):
-    if permission in GlobalPermissions:
+def is_valid_scope(scope):
+    if scope in GlobalsScopes:
         return True
     else:
         return False
