@@ -9,6 +9,7 @@ def requires_scopes(*required_scopes):
     # # TODO: check as middelware, that each view has a scope, when accessed.
     # if not required_scopes:
     #     raise ValueError("View is not restricted by a scope. This is not allowed.")
+
     def decorator(view_func):
         @wraps(view_func)
         def _wrapped_view(request, *args, **kwargs):
@@ -33,7 +34,11 @@ def requires_scopes(*required_scopes):
                 response = requests.post(OIDC_OP_TOKEN_ENDPOINT, data=data, headers=headers)
                 response_data = response.json()
                 # TODO: check jwt for details
-                decoded_rpt = jwt.decode(response_data['access_token'], options={"verify_signature": False}, algorithms='RS256')  # Requesting Party Token, part of User-Managed Access (UMA)
+                # Load the public key from file
+                with open('keycloak_public_key.pem', 'r') as pem_file:
+                    public_key = pem_file.read()
+
+                decoded_rpt = jwt.decode(response_data['access_token'], key=public_key, algorithms='RS256', audience=OIDC_RP_CLIENT_ID)  # Requesting Party Token, part of User-Managed Access (UMA)
 
                 permission_list = decoded_rpt['authorization']['permissions']
 

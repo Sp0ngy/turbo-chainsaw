@@ -164,6 +164,7 @@ OIDC_USERNAME_ALGO = 'users.utils.generate_username'
 OIDC_RP_SIGN_ALGO = 'RS256'
 OIDC_RP_SCOPES = 'openid email'
 OIDC_STORE_ACCESS_TOKEN = True
+OIDC_STORE_ID_TOKEN = True  # Needs to be stored as it is used as id_token_hint for logout
 
 LOGIN_URL = 'oidc_authentication_init'
 LOGIN_REDIRECT_URL = '/show-username'
