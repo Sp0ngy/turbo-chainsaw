@@ -1,0 +1,9 @@
+{
+    "policies": [
+        {
+            "name": "isResourceOwner",
+            "fileName": "isResourceOwner.js",
+            "description": "Policy to check if the user is owner of resource"
+        }
+    ]
+}
