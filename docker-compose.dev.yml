@@ -29,6 +29,7 @@ services:
             - start-dev
             - --import-realm
         volumes:
-            - ./keycloak_data:/opt/keycloak/data
+            - ./keycloak/keycloak_data:/opt/keycloak/data
+            - ./keycloak/deployment:/opt/keycloak/providers
 volumes:
         postgres_data:
