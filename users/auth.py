@@ -5,18 +5,24 @@ from mozilla_django_oidc import auth
 
 class OIDCAuthenticationBackend(auth.OIDCAuthenticationBackend):
 
+    def filter_users_by_claims(self, claims):
+        """Return all users matching the specified Keycloak ID."""
+        keycloak_id = claims.get("sub")  # Assuming 'sub' claim is used as Keycloak ID
+        if not keycloak_id:
+            return self.UserModel.objects.none()
+        return self.UserModel.objects.filter(keycloak_id=keycloak_id)
+
     def create_user(self, claims):
-        user = super(OIDCAuthenticationBackend, self).create_user(claims)
-        user.email = claims.get('email')
-        user.keycloak_id = claims.get('sub')
+        """Return object for a newly created user account."""
+        keycloak_id = claims.get("sub")
+        user = self.UserModel.objects.create_user(keycloak_id)
+        # Set any additional fields from claims here
         user.save()
         self._assign_roles_to_user(user, claims)
         self.update_groups(user, claims)
-
         return user
 
     def update_user(self, user, claims):
-        user.email = claims.get('email')
         user.keycloak_id = claims.get('sub')
         user.save()
         self._assign_roles_to_user(user, claims)
