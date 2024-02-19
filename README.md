@@ -24,6 +24,13 @@ sudo docker compose -f docker-compose.prod.yml up -d
 ## Network
 - edit `/etc/hosts` file and add the forwarding form the docker name to the localhost ip, e.g. `127.0.0.1 iam.curiescience.com`
 
+### Deploy custom Java Script police
+- install JDK
+- `jar -cvf keycloakPolicies.jar -C <deployment-folder> .`
+- copy JAR file to `keycloak/deployment`
+- Keycloak admin UI is buggy with custom JS policies, needs to save first to show JS code
+- Instruction: https://keycloak.discourse.group/t/how-to-create-js-policy/22821/2
+
 ## Keycloak auth
 - `mozilla-django-oidc` library is an OpenID Connect adapter
 - Keycloak (v23.0.6) server is running on an own container and mapped into the docker network (see `OIDC_HOST = http://host.docker.internal:8080`)
