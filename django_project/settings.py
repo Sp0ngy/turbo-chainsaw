@@ -158,6 +158,8 @@ OIDC_OP_JWKS_ENDPOINT = os.getenv('OIDC_OP_JWKS_ENDPOINT',
     f'{OIDC_HOST}/realms/{OIDC_REALM}/protocol/openid-connect/certs')
 OIDC_OP_LOGOUT_ENDPOINT = os.getenv('OIDC_OP_LOGOUT_ENDPOINT',
     f'{OIDC_HOST}/realms/{OIDC_REALM}/protocol/openid-connect/logout')
+UMA_PROTECTION_API = os.getenv('OIDC_OP_LOGOUT_ENDPOINT',
+    f'{OIDC_HOST}/realms/{OIDC_REALM}/authz/protection/resource_set')
 
 OIDC_OP_LOGOUT_URL_METHOD = 'users.utils.oidc_op_logout'
 OIDC_USERNAME_ALGO = 'users.utils.generate_username'
