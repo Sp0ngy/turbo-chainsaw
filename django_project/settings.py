@@ -136,7 +136,7 @@ AUTH_USER_MODEL = 'users.User'
 
 # Add 'mozilla_django_oidc' authentication backend
 AUTHENTICATION_BACKENDS = (
-    #'django.contrib.auth.backends.ModelBackend', Admin user needs to log in through keycloak
+    'django.contrib.auth.backends.ModelBackend', # Admin user needs to log in through keycloak
     'users.auth.OIDCAuthenticationBackend',
 )
 
@@ -169,5 +169,5 @@ OIDC_STORE_ACCESS_TOKEN = True
 OIDC_STORE_ID_TOKEN = True  # Needs to be stored as it is used as id_token_hint for logout
 
 LOGIN_URL = 'oidc_authentication_init'
-LOGIN_REDIRECT_URL = '/show-username'
+LOGIN_REDIRECT_URL = '/ehr'
 LOGOUT_REDIRECT_URL = '/auth'

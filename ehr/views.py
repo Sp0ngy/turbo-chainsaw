@@ -8,6 +8,9 @@ from users.decorators import requires_scopes
 from django_project.permissions import GlobalsScopes as gb
 
 gPAS_domain_name = 'TurboChainsaw'
+def index(request):
+    return render(request, 'ehr/index.html', {})
+
 
 @requires_scopes(gb.EHR_READ, gb.EHR_WRITE)
 def pseudonymize_data(request):

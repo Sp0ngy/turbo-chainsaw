@@ -2,14 +2,13 @@ from django.contrib.auth.models import Group
 from django.db import transaction
 from mozilla_django_oidc import auth
 
+
 class OIDCAuthenticationBackend(auth.OIDCAuthenticationBackend):
 
     def create_user(self, claims):
         user = super(OIDCAuthenticationBackend, self).create_user(claims)
-
-        user.first_name = claims.get('given_name', '')
-        user.last_name = claims.get('family_name', '')
         user.email = claims.get('email')
+        user.keycloak_id = claims.get('sub')
         user.save()
         self._assign_roles_to_user(user, claims)
         self.update_groups(user, claims)
@@ -17,9 +16,8 @@ class OIDCAuthenticationBackend(auth.OIDCAuthenticationBackend):
         return user
 
     def update_user(self, user, claims):
-        user.first_name = claims.get('given_name', '')
-        user.last_name = claims.get('family_name', '')
         user.email = claims.get('email')
+        user.keycloak_id = claims.get('sub')
         user.save()
         self._assign_roles_to_user(user, claims)
         self.update_groups(user, claims)
