@@ -25,6 +25,8 @@ class GlobalsScopes(Enum):
     EHR_WRITE = 'ehr.write'
     EHR_DELETE = 'ehr.delete'
     USERS_READ = 'users.read'
+    PATIENT_PROFILE_READ = 'patient-profile.read'
+    PATIENT_PROFILE_WRITE = 'patient-profile.write'
 
 def is_valid_scope(scope):
     if scope in GlobalsScopes:

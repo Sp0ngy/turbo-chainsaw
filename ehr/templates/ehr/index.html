@@ -10,7 +10,7 @@
     <ul>
         <li><a href="{% url 'ehr:pseudonymize_data' %}">Pseudonymize</a></li>
         <li><a href="{% url 'ehr:de-pseudonymize_data' %}">De-Pseudonymize</a></li>
-        <li><a href="{% url 'users:show-username' %}">User Information</a></li>
+        <li><a href="{% url 'ehr:patient-profile' pk %}">User Information</a></li>
         <li><a href="{% url 'users:auth' %}">Authentication</a></li>
     </ul>
 </body>

@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'users.middleware.OIDCAuthorizationMiddleware',   # Can be an option to restrict all requests to authorized users, but needs to exempt login
+    'mozilla_django_oidc.middleware.SessionRefresh'
 ]
 
 ROOT_URLCONF = 'django_project.urls'
@@ -136,7 +136,7 @@ AUTH_USER_MODEL = 'users.User'
 
 # Add 'mozilla_django_oidc' authentication backend
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend', # Admin user needs to log in through keycloak
+    # 'django.contrib.auth.backends.ModelBackend', # Admin user needs to log in through keycloak
     'users.auth.OIDCAuthenticationBackend',
 )
 
@@ -158,8 +158,12 @@ OIDC_OP_JWKS_ENDPOINT = os.getenv('OIDC_OP_JWKS_ENDPOINT',
     f'{OIDC_HOST}/realms/{OIDC_REALM}/protocol/openid-connect/certs')
 OIDC_OP_LOGOUT_ENDPOINT = os.getenv('OIDC_OP_LOGOUT_ENDPOINT',
     f'{OIDC_HOST}/realms/{OIDC_REALM}/protocol/openid-connect/logout')
-UMA_PROTECTION_API = os.getenv('OIDC_OP_LOGOUT_ENDPOINT',
+UMA_PROTECTION_API_RESOURCE = os.getenv('UMA_PROTECTION_API_RESOURCE',
     f'{OIDC_HOST}/realms/{OIDC_REALM}/authz/protection/resource_set')
+UMA_PROTECTION_API_PERMISSION = os.getenv('UMA_PROTECTION_API_PERMISSION',
+    f'{OIDC_HOST}/realms/{OIDC_REALM}/authz/protection/permission')
+UMA_PROTECTION_API_POLICY = os.getenv('UMA_PROTECTION_API_POLICY',
+    f'{OIDC_HOST}/realms/{OIDC_REALM}/authz/protection/uma-policy')
 
 OIDC_OP_LOGOUT_URL_METHOD = 'users.utils.oidc_op_logout'
 OIDC_USERNAME_ALGO = 'users.utils.generate_username'
@@ -167,6 +171,8 @@ OIDC_RP_SIGN_ALGO = 'RS256'
 OIDC_RP_SCOPES = 'openid email'
 OIDC_STORE_ACCESS_TOKEN = True
 OIDC_STORE_ID_TOKEN = True  # Needs to be stored as it is used as id_token_hint for logout
+OIDC_EXEMPT_URLS = ['/auth']
+
 
 LOGIN_URL = 'oidc_authentication_init'
 LOGIN_REDIRECT_URL = '/ehr'

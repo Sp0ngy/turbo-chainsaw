@@ -16,7 +16,7 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(keycloak_id, password, **extra_fields)
 
-
+# TODO: remove "last_login" field, not required anymore
 class User(AbstractBaseUser, PermissionsMixin):
     keycloak_id = models.CharField(
         unique=True,
