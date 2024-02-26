@@ -35,3 +35,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.keycloak_id
 
+
+class Resource(models.Model):
+    class ResourceTypes(models.TextChoices):
+        PATIENT_PROFILE = "patient_profile", "Patient Profile"
+
+    user = models.ForeignKey("User", on_delete=models.CASCADE)
+    keycloak_resource_id = models.CharField(max_length=300)
+    type = models.CharField(max_length=30, choices=ResourceTypes.choices, help_text="Classification of the resource")
+
+    class Meta:
+        unique_together = [["user", "type"]]

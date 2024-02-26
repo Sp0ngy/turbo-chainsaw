@@ -4,6 +4,11 @@
             "name": "isResourceOwner",
             "fileName": "isResourceOwner.js",
             "description": "Policy to check if the user is owner of resource"
+        },
+        {
+            "name": "isResourceOwner2",
+            "fileName": "isResourceOwner2.js",
+            "description": "Policy to check if the user id is in the resource name"
         }
     ]
 }

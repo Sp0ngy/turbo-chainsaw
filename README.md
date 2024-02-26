@@ -26,7 +26,7 @@ sudo docker compose -f docker-compose.prod.yml up -d
 
 ### Deploy custom Java Script police
 - install JDK
-- `jar -cvf keycloakPolicies.jar -C <deployment-folder> .`
+- on windows`"C:\Program Files\Java\jdk-21\bin\jar.exe" -cvf keycloakPolicies.jar -C <deployment-folder> .`
 - copy JAR file to `keycloak/deployment`
 - Keycloak admin UI is buggy with custom JS policies, needs to save first to show JS code
 - Instruction: https://keycloak.discourse.group/t/how-to-create-js-policy/22821/2

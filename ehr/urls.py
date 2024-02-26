@@ -7,5 +7,5 @@ urlpatterns = [
     path("pseudonymize", views.pseudonymize_data, name="pseudonymize_data"),
     path("de-pseudonymize", views.de_pseudonymize_data, name="de-pseudonymize_data"),
     path("", views.index, name="index"),
-    path("patient-profile/<pk>", views.patient_profile, name="patient-profile")
+    path("patient-profile/<str:keycloak_resource_id>", views.patient_profile, name="patient-profile")
 ]

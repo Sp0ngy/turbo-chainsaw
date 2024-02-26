@@ -2,7 +2,7 @@ from django.db import models
 from users.models import User
 
 class Patient(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     identifier = models.CharField(
         unique=True,
         max_length=100,
