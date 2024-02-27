@@ -31,9 +31,13 @@ def index(request):
 @protected_user_resource(gs.PATIENT_PROFILE_READ, gs.PATIENT_PROFILE_WRITE)
 def patient_profile(request, keycloak_resource_id=None):
     """ Takes Patient pk which is same as identifier without 'P' """
+    # if request.method == 'POST' and 'grant_access' in request.POST:
+    #     grant_resource_permission(request)
 
-    if request.method == 'POST' and 'grant_access' in request.POST:
-        grant_resource_permission(request)
+    # TODO:
+    # get resource_id
+    # method to check for scopes (similar to decorator with arg resource_id)
+    # continue
 
     if keycloak_resource_id:
         # Find the resource and then the user
