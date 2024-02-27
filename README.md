@@ -41,7 +41,7 @@ sudo docker compose -f docker-compose.prod.yml up -d
 - Django default authentication backend is now deactivated, to create an admin user, create a new user and assign role `admin` in keycloak, `http://localhost:8000/admin` can no longer be used to login with admin user (but be used to access django admin interface)
 
 ## gPAS
-- pull repo from source https://github.com/mosaic-hgw/gPAS/tree/master/source and adjust the host port to `8081` (keycloak runs on `8080`)
+- pull repo from website [Download Docker Compose](https://www.ths-greifswald.de/forscher/gpas/#download) and adjust the host port to `8081` (keycloak runs on `8080`)
 - connect the docker container to the docker network of this repo `docker network connect {NETWORK_NAME} {GPAS_CONTAINER_NAME}`
 - for initial setup create new `Domäne` and adapt in `ehr.views`
 - admin interface available under `http:\\localhost:8081\gpas-web`

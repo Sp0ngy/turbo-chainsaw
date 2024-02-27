@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from zeep import Client
 
 from ehr.forms.forms import StringForm
-from ehr.models import Patient
+from ehr.models import Patient, PersonalMedicalInformation
 from users.models import User, Resource
 from django_project.permissions import GlobalsScopes as gs
 
@@ -31,7 +31,7 @@ def index(request):
 @protected_user_resource(gs.PATIENT_PROFILE_READ, gs.PATIENT_PROFILE_WRITE)
 def patient_profile(request, keycloak_resource_id=None):
     """ Takes Patient pk which is same as identifier without 'P' """
-
+    # TODO: instead of passing the resource id through the url, query it in here and pass to decorator?
     if request.method == 'POST' and 'grant_access' in request.POST:
         grant_resource_permission(request)
 
@@ -40,12 +40,14 @@ def patient_profile(request, keycloak_resource_id=None):
         resource = get_object_or_404(Resource, keycloak_resource_id=keycloak_resource_id)
         user = get_object_or_404(User, pk=resource.user.pk)
         patient = get_object_or_404(Patient, user=user)
+        pmi = PersonalMedicalInformation.objects.get(patient=patient)
     else:
         return Http404("This User has no Patient Profile.")
 
     ctx = {
         "user": user,
-        "patient": patient
+        "patient": patient,
+        "pmi": pmi
     }
 
     return render(request, 'ehr/patient_profile.html', ctx)

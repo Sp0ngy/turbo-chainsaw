@@ -2,6 +2,9 @@ import unicodedata
 
 from django.conf import settings
 
+from zeep import Client
+
+from django_project.settings import GPAS_DOMAIN_NAME, GPAS_WSDL_URL
 
 def generate_username(email):
     # Using Python 3 and Django 1.11, usernames can contain alphanumeric
@@ -22,8 +25,19 @@ def oidc_op_logout(request):
 
     return logout_url
 
-# Example without the id_token_hint
-# def oidc_op_logout(request):
-#     oidc_op_logout_endpoint = settings.OIDC_OP_LOGOUT_ENDPOINT
-#     redirect_url = request.build_absolute_uri(getattr(settings, 'LOGOUT_REDIRECT_URL', '/'))
-#     return '{}?redirect_uri={}'.format(oidc_op_logout_endpoint, redirect_url)
+
+def pseudonymize_data(data):
+    try:
+        client = Client(GPAS_WSDL_URL)
+        pseudonymized_data = client.service.getOrCreatePseudonymFor(value=data, domainName=GPAS_DOMAIN_NAME)
+    except Exception as e:
+        raise Exception(e)
+    return pseudonymized_data
+
+def de_pseudonymize_data(data):
+    try:
+        client = Client(GPAS_WSDL_URL)
+        de_pseudonymized_data = client.service.getValueFor(value=data, domainName=GPAS_DOMAIN_NAME)
+    except Exception as e:
+        raise Exception(e)
+    return de_pseudonymized_data
