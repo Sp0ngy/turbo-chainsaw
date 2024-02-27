@@ -3,7 +3,7 @@ from django.http import HttpResponseForbidden
 
 from django_project.settings import UMA_PROTECTION_API_POLICY, OIDC_RP_CLIENT_SECRET, OIDC_RP_CLIENT_ID, OIDC_OP_TOKEN_ENDPOINT, UMA_PROTECTION_API_RESOURCE
 
-from users.decorators import decode_jwt_token
+from users.auth_utils import decode_jwt_token
 
 def grant_resource_permission(request):
     # Get User access_token

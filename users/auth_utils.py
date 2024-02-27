@@ -81,6 +81,41 @@ def protected_user_resource(*required_scopes):
         return _wrapped_view
     return decorator
 
+def has_required_scope(request, required_scopes):
+    access_token = request.session.get('oidc_access_token')
+    resource = identify_requested_resource(required_scopes)
+
+    response = call_token_endpoint_with_resource_scope(access_token, required_scopes, resource)
+    if response.status_code == 403:  # Unauthorized
+        return False, "Unauthorized"
+
+    token_w_scopes = response.json()['access_token']
+    if not has_required_permissions(token_w_scopes, required_scopes=required_scopes):
+        return False, "You do not have the required permission to access this resource."
+
+    return True, "Authorized"
+
+def has_protected_user_resource_scope(request, required_scopes, keycloak_resource_id):
+    """
+
+    :param request:
+    :param required_scopes:
+    :param keycloak_resource_id:
+    :return:
+    """
+    access_token = request.session.get('oidc_access_token')
+
+    response = call_token_endpoint_with_resource_scope(access_token, required_scopes, keycloak_resource_id)
+
+    if response.status_code == 403:  # Unauthorized
+        return False, "Unauthorized"
+
+    token_w_scopes = response.json()['access_token']
+    if not has_required_permissions(token_w_scopes, required_scopes=required_scopes):
+        return False, "You do not have the required permission to access this resource."
+
+    return True, "Authorized"
+
 def has_required_permissions(permission_token, required_scopes):
     """
     Checks if the decoded token contains the required scopes.
@@ -104,6 +139,37 @@ def has_required_permissions(permission_token, required_scopes):
         return True
     else:
         return False
+
+def identify_requested_resource(required_scopes):
+    scope_to_resource = {
+        GlobalsScopes.STAFF_PORTAL_READ: 'Staff-Portal',
+        GlobalsScopes.STAFF_PORTAL_WRITE: 'Staff-Portal',
+    }
+    resources = set([scope_to_resource[scope] for scope in required_scopes if scope in scope_to_resource])
+    if len(resources) > 1:
+        # Implementation only for scopes, which are mapped to the same resource. Can be extended:
+        # https://www.keycloak.org/docs/latest/authorization_services/#_service_obtaining_permissions
+        # Currently, we handle scopes mapping to the same resource. Redirect or handle error.
+        raise KeyError("Error: Required scopes map to multiple resources.")
+    resource = resources.pop()
+    return resource
+
+def call_token_endpoint_with_resource_scope(access_token, required_scopes, resource):
+    """
+
+    :param access_token:
+    :param required_scopes:
+    :param resource: takes the keycloak resource id or the resource name
+    :return:
+    """
+    headers = {'Authorization': f'Bearer {access_token}'}
+    permissions_str = ",".join(scope.value for scope in required_scopes)  # patient-profile.read,patient-profile.write'
+    data = {'permission': f'{resource}#{permissions_str}',
+            'grant_type': 'urn:ietf:params:oauth:grant-type:uma-ticket',
+            'audience': f'{OIDC_RP_CLIENT_ID}', }
+
+    response = requests.post(OIDC_OP_TOKEN_ENDPOINT, data=data, headers=headers)
+    return response
 
 def decode_jwt_token(token, audience):
     """

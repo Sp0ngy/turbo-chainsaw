@@ -1,51 +1,35 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse, Http404
+from django.http import JsonResponse, Http404, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
 
 from zeep import Client
 
 from ehr.forms.forms import StringForm
 from ehr.models import Patient
-from users.models import User, Resource
+from users.models import Resource
 from django_project.permissions import GlobalsScopes as gs
 
-from users.decorators import protected_user_resource, requires_scope
-from users.uma_policy_management import grant_resource_permission
+from users.auth_utils import has_protected_user_resource_scope, has_required_scope
 
 gPAS_domain_name = 'TurboChainsaw'
 
 @login_required
 def index(request):
-    try:
-        patient_resource = request.user.resource_set.get(type=Resource.ResourceTypes.PATIENT_PROFILE)
-        if patient_resource:
-            patient_resource_id = patient_resource.keycloak_resource_id
-        else:
-            patient_resource_id = None
-    except Resource.DoesNotExist:
-        patient_resource_id = None
-
-    return render(request, 'ehr/index.html', {'patient_resource_id': patient_resource_id})
+    return render(request, 'ehr/index.html', {})
 
 @login_required
-@protected_user_resource(gs.PATIENT_PROFILE_READ, gs.PATIENT_PROFILE_WRITE)
-def patient_profile(request, keycloak_resource_id=None):
-    """ Takes Patient pk which is same as identifier without 'P' """
-    # if request.method == 'POST' and 'grant_access' in request.POST:
-    #     grant_resource_permission(request)
-
-    # TODO:
-    # get resource_id
-    # method to check for scopes (similar to decorator with arg resource_id)
-    # continue
-
-    if keycloak_resource_id:
-        # Find the resource and then the user
-        resource = get_object_or_404(Resource, keycloak_resource_id=keycloak_resource_id)
-        user = get_object_or_404(User, pk=resource.user.pk)
+def patient_profile(request):
+    user = request.user
+    try:
+        resource = get_object_or_404(Resource, user=user, type=Resource.ResourceTypes.PATIENT_PROFILE)
         patient = get_object_or_404(Patient, user=user)
-    else:
-        return Http404("This User has no Patient Profile.")
+        keycloak_resource_id = resource.keycloak_resource_id
+    except Resource.DoesNotExist:
+        raise Http404("This User has no Patient Profile.")
+
+    is_authorized, message = has_protected_user_resource_scope(request, [gs.PATIENT_PROFILE_READ, gs.PATIENT_PROFILE_WRITE], keycloak_resource_id)
+    if not is_authorized:
+        return HttpResponseForbidden(message)
 
     ctx = {
         "user": user,
@@ -56,8 +40,11 @@ def patient_profile(request, keycloak_resource_id=None):
 
 
 @login_required
-@requires_scope(gs.STAFF_PORTAL_READ, gs.STAFF_PORTAL_WRITE)
 def pseudonymize_data(request):
+    is_authorized, message = has_required_scope(request,[gs.STAFF_PORTAL_READ, gs.STAFF_PORTAL_WRITE])
+    if not is_authorized:
+        return HttpResponseForbidden(message)
+
     # Ensure this is a POST request with necessary data
     pseudonymized_data = ''
     if request.method == "POST":
@@ -86,8 +73,11 @@ def pseudonymize_data(request):
     return render(request, 'ehr/pseudonymize.html', {'form': form, 'pseudonymized_data': pseudonymized_data})
 
 @login_required
-@requires_scope(gs.STAFF_PORTAL_READ, gs.STAFF_PORTAL_WRITE)
 def de_pseudonymize_data(request):
+    is_authorized, message = has_required_scope(request,[gs.STAFF_PORTAL_READ, gs.STAFF_PORTAL_WRITE])
+    if not is_authorized:
+        return HttpResponseForbidden(message)
+
     de_pseudonymized_data = ''
     if request.method == "POST":
         form = StringForm(request.POST)
