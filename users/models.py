@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
-from users.utils import pseudonymize_data, de_pseudonymize_data
+from users.utils import mask, unmask
+from users.fields import PseudonymizedField
 
 
 class CustomUserManager(BaseUserManager):
@@ -56,42 +57,29 @@ class Resource(models.Model):
         unique_together = [["user", "type"]]
 
 
-class AddressQuerySet(models.QuerySet):
-    def _filter_or_exclude(self, negate, *args, **kwargs):
-        for field in self.model.PSEUDONYMIZE_FIELDS:
-            value = kwargs.pop(field, None)
-            if value is not None:
-                kwargs[f'_{field}'] = pseudonymize_data(value)
-        return super()._filter_or_exclude(negate, *args, **kwargs)
-
-class AddressManager(models.Manager):
-    def get_queryset(self):
-        return AddressQuerySet(self.model, using=self._db)
-
-# Stolen from https://github.com/cuttlesoft/django-pseudonymization-example/blob/properties/users/models.py
 class Address(models.Model):
     """
     Stores the pseudonyms of the according data.
     """
+    class CountryCode(models.TextChoices):  # Acc. to ISO 3166 + TRNC
+        EMPTY = "", "-----"
+        DE = "DE", "Germany"
+        TR = "TR", "Turkey"
+        TRNC = "TRNC", "Turkish Republic of North Cyprus"
+        CY = "CY", "Cyprus"
+        BE = "BE", "Belgium"
+        DK = "DK", "Denmark"
+        FR = "FR", "France"
+        LU = "LU", "Luxembourg"
+        NL = "NL", "Netherlands"
+        AT = "AT", "Austria"
+        CZ = "CZ", "Czech Republic"
+        PL = "PL", "Poland"
+        CH = "CH", "Switzerland"
+        LI = "LI", "Liechtenstein"
 
-    PSEUDONYMIZE_FIELDS = ['line']
-
-    _line = models.CharField(
-        max_length=255,
-        help_text="Street name, number or P.O. Box",
-        null=False,
-        blank=True,
-    )
-
-    @property
-    def line(self):
-        return de_pseudonymize_data(self._line)
-
-    @line.setter
-    def line(self, value):
-        self._line = pseudonymize_data(value)
-
-    objects = AddressManager()
+    line = PseudonymizedField(models.CharField, (mask, unmask), max_length=100, null=False, blank=True)
+    country = PseudonymizedField(models.CharField, (mask, unmask), choices=CountryCode.choices, max_length=100)
 
     class Meta:
         verbose_name_plural = "Addresses"

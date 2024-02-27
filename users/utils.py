@@ -26,18 +26,26 @@ def oidc_op_logout(request):
     return logout_url
 
 
-def pseudonymize_data(data):
+def pseudonymize(value):
     try:
         client = Client(GPAS_WSDL_URL)
-        pseudonymized_data = client.service.getOrCreatePseudonymFor(value=data, domainName=GPAS_DOMAIN_NAME)
+        pseudonymized_data = client.service.getOrCreatePseudonymFor(value=value, domainName=GPAS_DOMAIN_NAME)
     except Exception as e:
         raise Exception(e)
     return pseudonymized_data
 
-def de_pseudonymize_data(data):
+def de_pseudonymize(value):
     try:
         client = Client(GPAS_WSDL_URL)
-        de_pseudonymized_data = client.service.getValueFor(value=data, domainName=GPAS_DOMAIN_NAME)
+        de_pseudonymized_data = client.service.getValueFor(psn=value, domainName=GPAS_DOMAIN_NAME)
     except Exception as e:
         raise Exception(e)
     return de_pseudonymized_data
+
+def mask(value):
+    """Shift characters/numbers/date values by one to mask the value of personal data."""
+    return pseudonymize(value)
+
+def unmask(value):
+    """Shift characters/numbers/date values by one to recover the original value of masked data."""
+    return de_pseudonymize(value)

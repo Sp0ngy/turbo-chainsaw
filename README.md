@@ -46,3 +46,10 @@ sudo docker compose -f docker-compose.prod.yml up -d
 - for initial setup create new `Domäne` and adapt in `ehr.views`
 - admin interface available under `http:\\localhost:8081\gpas-web`
 - test app interfaces available under `http:\\localhost:8000\pseudonymize` and `http:\\localhost:8000\de-pseudonymize`
+
+## Postgresql in Docker
+- `docker-compose -f .\docker-compose.dev.yml exec db.curiescience.com bash ` execute bash in container
+- `psql -U <username> <database_name>`
+- list databases `\l`
+- select database `\c <database_name>`
+- list schemas/tables `\dt`
