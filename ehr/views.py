@@ -1,3 +1,4 @@
+import zeep
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse, Http404, HttpResponseForbidden
 from django.contrib.auth.decorators import login_required
@@ -53,10 +54,12 @@ def pseudonymize_data(request):
             string = form.cleaned_data['string']
 
             # Either use IP in docker network or its container name
+            access_token = request.session.get('oidc_access_token')
             wsdl_url = 'http://gpas-wildfly:8080/gpas/gpasService?wsdl'
+            settings = zeep.Settings(extra_http_headers={'Authorization': f'Bearer {access_token}'})
 
             try:
-                client = Client(wsdl_url)
+                client = Client(wsdl_url, settings=settings)
                 response = client.service.getOrCreatePseudonymFor(value=string, domainName=gPAS_domain_name)
                 pseudonymized_data = response  # Adapt based on actual response structure
 
@@ -84,11 +87,12 @@ def de_pseudonymize_data(request):
         if form.is_valid():
             pseudonymized_string = form.cleaned_data['string']
 
-            # Either use IP in docker network or its container name
+            access_token = request.session.get('oidc_access_token')
             wsdl_url = 'http://gpas-wildfly:8080/gpas/gpasService?wsdl'
+            settings = zeep.Settings(extra_http_headers={'Authorization': f'Bearer {access_token}'})
 
             try:
-                client = Client(wsdl_url)
+                client = Client(wsdl_url, settings=settings)
                 response = client.service.getValueFor(psn=pseudonymized_string, domainName=gPAS_domain_name)
                 de_pseudonymized_data = response  # Adapt based on actual response structure
 
