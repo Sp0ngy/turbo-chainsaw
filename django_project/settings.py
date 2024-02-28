@@ -177,3 +177,8 @@ OIDC_EXEMPT_URLS = ['/auth']
 LOGIN_URL = 'oidc_authentication_init'
 LOGIN_REDIRECT_URL = '/ehr'
 LOGOUT_REDIRECT_URL = '/auth'
+
+GPAS_DOMAIN_NAME = os.getenv('GPAS_DOMAIN_NAME',
+    'TurboChainsaw')
+GPAS_WSDL_URL = os.getenv('GPAS_WSDL_URL',
+    'http://gpas-wildfly:8080/gpas/gpasService?wsdl')

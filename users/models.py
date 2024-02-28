@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from users.utils import mask, unmask
+from users.fields import PseudonymizedField
+
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, keycloak_id, password=None, **extra_fields):
@@ -26,6 +29,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
+    address = models.OneToOneField(
+        "Address", on_delete=models.SET_NULL, null=True, blank=True
+    )
 
     USERNAME_FIELD = 'keycloak_id'
     REQUIRED_FIELDS = []  # additional fields you may require at creation
@@ -37,6 +43,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Resource(models.Model):
+    """
+    user-associated resources with a type
+    """
     class ResourceTypes(models.TextChoices):
         PATIENT_PROFILE = "patient_profile", "Patient Profile"
 
@@ -46,3 +55,31 @@ class Resource(models.Model):
 
     class Meta:
         unique_together = [["user", "type"]]
+
+
+class Address(models.Model):
+    """
+    Stores the pseudonyms of the according data.
+    """
+    class CountryCode(models.TextChoices):  # Acc. to ISO 3166 + TRNC
+        EMPTY = "", "-----"
+        DE = "DE", "Germany"
+        TR = "TR", "Turkey"
+        TRNC = "TRNC", "Turkish Republic of North Cyprus"
+        CY = "CY", "Cyprus"
+        BE = "BE", "Belgium"
+        DK = "DK", "Denmark"
+        FR = "FR", "France"
+        LU = "LU", "Luxembourg"
+        NL = "NL", "Netherlands"
+        AT = "AT", "Austria"
+        CZ = "CZ", "Czech Republic"
+        PL = "PL", "Poland"
+        CH = "CH", "Switzerland"
+        LI = "LI", "Liechtenstein"
+
+    line = PseudonymizedField(models.CharField, (mask, unmask), max_length=100, null=False, blank=True)
+    country = PseudonymizedField(models.CharField, (mask, unmask), choices=CountryCode.choices, max_length=100)
+
+    class Meta:
+        verbose_name_plural = "Addresses"

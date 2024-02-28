@@ -10,6 +10,8 @@
     <ul>
         <li>User Keycloak ID: {{ user.keycloak_id }}</li>
         <li>Patient Identifier: {{ patient.identifier }}</li>
+        <li>Weight: {{ pmi.weight }}</li>
+        <li>Height: {{ pmi.height }}</li>
     </ul>
     <form method="post" action="">
     {% csrf_token %}

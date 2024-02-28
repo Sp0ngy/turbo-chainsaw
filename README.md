@@ -42,8 +42,8 @@ sudo docker compose -f docker-compose.prod.yml up -d
 
 ## gPAS
 ### Initial Setup
-- pull repo from [source](https://github.com/mosaic-hgw/gPAS/tree/master/source) and adjust the host port to `8081` (keycloak runs on `8080`)
-- connect the docker container to the docker network of this repo `docker network connect {NETWORK_NAME} {GPAS_CONTAINER_NAME}` (or by docker-compose configuration)
+- pull repo from website [Download Docker Compose](https://www.ths-greifswald.de/forscher/gpas/#download) and adjust the host port to `8081` (keycloak runs on `8080`)
+- connect the docker container to the docker network of this repo `docker network connect {NETWORK_NAME} {GPAS_CONTAINER_NAME}`
 - for initial setup create new `Domäne` and adapt in `ehr.views`
 - admin interface available under `http:\\localhost:8081\gpas-web`
 - test app interfaces available under `http:\\localhost:8000\pseudonymize` and `http:\\localhost:8000\de-pseudonymize`
@@ -51,3 +51,10 @@ sudo docker compose -f docker-compose.prod.yml up -d
 - see [gPAS manual](https://www.ths-greifswald.de/wp-content/uploads/tools/auth/2022-10-20-TTP-Tools-Keycloak-Einrichtung.pdf)
 - important: authorization for APIs like SOAP needs to be enabled, see docker-compose.yml of gPAS server
 - for each API request access_token is required
+
+## Postgresql in Docker
+- `docker-compose -f .\docker-compose.dev.yml exec db.curiescience.com bash ` execute bash in container
+- `psql -U <username> <database_name>`
+- list databases `\l`
+- select database `\c <database_name>`
+- list schemas/tables `\dt`

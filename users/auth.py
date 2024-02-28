@@ -92,6 +92,7 @@ def create_resource(user):
     resource_name = f'Patient-Profile-{user.patient.identifier}-{user.keycloak_id}'
 
     # Create a new resource
+    #TODO: add script to add policies, scopes, etc. if not existing, based on django_project/permission.py GlobalScopes
     headers = {'Authorization': f'Bearer {pat}', 'Content-Type': 'application/json'}
     data = {
         'name': resource_name,
