@@ -51,6 +51,7 @@ sudo docker compose -f docker-compose.prod.yml up -d
 - see [gPAS manual](https://www.ths-greifswald.de/wp-content/uploads/tools/auth/2022-10-20-TTP-Tools-Keycloak-Einrichtung.pdf)
 - important: authorization for APIs like SOAP needs to be enabled, see docker-compose.yml of gPAS server
 - for each API request access_token is required
+- for model-level pseudonymization the Protection API token of the client is used, therefore assign required gpas roles to service-account of the client
 
 ## Postgresql in Docker
 - `docker-compose -f .\docker-compose.dev.yml exec db.curiescience.com bash ` execute bash in container

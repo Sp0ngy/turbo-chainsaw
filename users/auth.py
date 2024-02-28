@@ -122,3 +122,4 @@ def save_resource_in_db(user, resource_id, type):
 
 
 
+
