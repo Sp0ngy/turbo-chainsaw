@@ -1,14 +1,14 @@
 {
     "policies": [
         {
-            "name": "isResourceOwner",
-            "fileName": "isResourceOwner.js",
-            "description": "Policy to check if the user is owner of resource"
+            "name": "has associated user ID in resource name",
+            "fileName": "hasAssociatedUserIDResourceName.js",
+            "description": "Checks, if the Keycloak User ID is in the name of the resource and associates it with the user"
         },
         {
-            "name": "isResourceOwner2",
-            "fileName": "isResourceOwner2.js",
-            "description": "Policy to check if the user id is in the resource name"
+            "name": "has associated user email in resource attributes",
+            "fileName": "hasAssociatedUserEmail.js",
+            "description": "Checks, if the resources has an attribute with the associated user email"
         }
     ]
 }
