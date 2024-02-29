@@ -6,9 +6,9 @@
             "description": "Checks, if the Keycloak User ID is in the name of the resource and associates it with the user"
         },
         {
-            "name": "has associated user email in resource attributes",
-            "fileName": "hasAssociatedUserEmail.js",
-            "description": "Checks, if the resources has an attribute with the associated user email"
+            "name": "has associated user id in resource attributes",
+            "fileName": "hasAttributeAssociatedUserId.js",
+            "description": "Checks, if the resources has an attribute with the associated user id"
         }
     ]
 }

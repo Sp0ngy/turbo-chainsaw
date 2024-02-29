@@ -20,12 +20,11 @@ class OIDCAuthenticationBackend(auth.OIDCAuthenticationBackend):
     def create_user(self, claims):
         """Return object for a newly created user account."""
         keycloak_id = claims.get("sub")
-        email = claims.get("email")
         user = self.UserModel.objects.create_user(keycloak_id)
         # Set any additional fields from claims here
         Patient.objects.get_or_create(user=user)
         # Create a new resource and save in app db
-        resource_id = create_resource(user, email)
+        resource_id = create_resource(user)
         save_resource_in_db(user, resource_id, Resource.ResourceTypes.PATIENT_PROFILE)
         user.save()
         self._assign_roles_to_user(user, claims)
@@ -102,7 +101,7 @@ def create_resource(user, email):
             'patient-profile.read',
             'patient-profile.write'
         ],
-        'attributes': {'associated_user_email': email}
+        'attributes': {'associated_user_id': user.keycloak_id}
     }
 
     try:
