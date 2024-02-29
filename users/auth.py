@@ -74,7 +74,7 @@ class OIDCAuthenticationBackend(auth.OIDCAuthenticationBackend):
             user.is_superuser = False
         user.save()
 
-def create_resource(user, email):
+def create_resource(user):
     # Get Access token
     data = {
         'client_id': OIDC_RP_CLIENT_ID,
