@@ -37,7 +37,7 @@ sudo docker compose -f docker-compose.prod.yml up -d
 - fresh setup: create new client in keycloak, enter `client_id` and `client_secret` in `settings.py`
 - manually add a user (important, email, first_name, last_name required as it is required in the Django `User` model) within the keycloak admin console `\admin`, credentials: `admin` `admin`
 - use the registration flow to create a new user
-- in `users.auth` the Authenitcation Backend is customized to synchronize the keycloak users with the app database
+- in `users.auth` the Authentication Backend is customized to synchronize the keycloak users with the app database
 - Django default authentication backend is now deactivated, to create an admin user, create a new user and assign role `admin` in keycloak, `http://localhost:8000/admin` can no longer be used to login with admin user (but be used to access django admin interface)
 
 ## gPAS
