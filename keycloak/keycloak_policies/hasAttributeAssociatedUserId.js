@@ -1,5 +1,5 @@
 var userId = $evaluation.getContext().getIdentity().getId()
-var resourceAttributeEmail = $evaluation.getPermission().getResource().getSingleAttribute('associated_user_id')
+var resourceAttributeUserId = $evaluation.getPermission().getResource().getSingleAttribute('associated_user_id')
 
-if (resourceAttributeEmail === userId)
+if (resourceAttributeUserId === userId)
 $evaluation.grant()
