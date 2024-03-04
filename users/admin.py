@@ -1,3 +1,6 @@
 from django.contrib import admin
+from users.models import User, Resource, Address
 
-# Register your models here.
+admin.site.register(User)
+admin.site.register(Resource)
+admin.site.register(Address)

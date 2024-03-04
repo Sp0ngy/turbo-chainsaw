@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pseudonymize Data</title>
+</head>
+<body>
+    <h2>Patient Information</h2>
+    <ul>
+        <li>User Keycloak ID: {{ user.keycloak_id }}</li>
+        <li>Patient Identifier: {{ patient.identifier }}</li>
+        <li>Weight: {{ pmi.weight }}</li>
+        <li>Height: {{ pmi.height }}</li>
+    </ul>
+    <form method="post" action="">
+    {% csrf_token %}
+    <button type="submit" name="grant_access" value="true">Grant Access to Staff</button>
+    </form>
+</body>
+</html>

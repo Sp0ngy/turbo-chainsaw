@@ -1,0 +1,14 @@
+{
+    "policies": [
+        {
+            "name": "has associated user ID in resource name",
+            "fileName": "hasAssociatedUserIDResourceName.js",
+            "description": "Checks, if the Keycloak User ID is in the name of the resource and associates it with the user"
+        },
+        {
+            "name": "has associated user id in resource attributes",
+            "fileName": "hasAttributeAssociatedUserId.js",
+            "description": "Checks, if the resources has an attribute with the associated user id"
+        }
+    ]
+}

@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-iw@%e_ja$*b-6sk^tsylhvim)37$=u60)74)u%nk5@9^@i&m2n
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -33,13 +33,15 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    'mozilla_django_oidc',  # Load after auth
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
     'bookstore.apps.BookstoreConfig',
-    'authormgmt.apps.AuthormgmtConfig'
+    'authormgmt.apps.AuthormgmtConfig',
+    'ehr.apps.EhrConfig',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'mozilla_django_oidc.middleware.SessionRefresh'
 ]
 
 ROOT_URLCONF = 'django_project.urls'
@@ -130,3 +133,52 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'users.User'
+
+# Add 'mozilla_django_oidc' authentication backend
+AUTHENTICATION_BACKENDS = (
+    # 'django.contrib.auth.backends.ModelBackend', # Admin user needs to log in through keycloak
+    'users.auth.OIDCAuthenticationBackend',
+)
+
+# https://phasetwo.io/blog/secure-django/#setting-up-a-keycloak-instance
+# OIDC Configuration
+OIDC_RP_CLIENT_ID = 'turbo'
+OIDC_RP_CLIENT_SECRET = 'y4SPiSpCC5cKBA7oc8E9SNtcxfMCTP2E'
+
+OIDC_REALM = 'master'
+OIDC_HOST = 'http://iam.curiescience.com:8080'
+
+OIDC_OP_AUTHORIZATION_ENDPOINT = os.getenv('OIDC_OP_AUTHORIZATION_ENDPOINT',
+    f'{OIDC_HOST}/realms/{OIDC_REALM}/protocol/openid-connect/auth')
+OIDC_OP_TOKEN_ENDPOINT = os.getenv('OIDC_OP_TOKEN_ENDPOINT',
+    f'{OIDC_HOST}/realms/{OIDC_REALM}/protocol/openid-connect/token')
+OIDC_OP_USER_ENDPOINT = os.getenv('OIDC_OP_USER_ENDPOINT',
+    f'{OIDC_HOST}/realms/{OIDC_REALM}/protocol/openid-connect/userinfo')
+OIDC_OP_JWKS_ENDPOINT = os.getenv('OIDC_OP_JWKS_ENDPOINT',
+    f'{OIDC_HOST}/realms/{OIDC_REALM}/protocol/openid-connect/certs')
+OIDC_OP_LOGOUT_ENDPOINT = os.getenv('OIDC_OP_LOGOUT_ENDPOINT',
+    f'{OIDC_HOST}/realms/{OIDC_REALM}/protocol/openid-connect/logout')
+UMA_PROTECTION_API_RESOURCE = os.getenv('UMA_PROTECTION_API_RESOURCE',
+    f'{OIDC_HOST}/realms/{OIDC_REALM}/authz/protection/resource_set')
+UMA_PROTECTION_API_PERMISSION = os.getenv('UMA_PROTECTION_API_PERMISSION',
+    f'{OIDC_HOST}/realms/{OIDC_REALM}/authz/protection/permission')
+UMA_PROTECTION_API_POLICY = os.getenv('UMA_PROTECTION_API_POLICY',
+    f'{OIDC_HOST}/realms/{OIDC_REALM}/authz/protection/uma-policy')
+
+OIDC_OP_LOGOUT_URL_METHOD = 'users.utils.oidc_op_logout'
+OIDC_USERNAME_ALGO = 'users.utils.generate_username'
+OIDC_RP_SIGN_ALGO = 'RS256'
+OIDC_RP_SCOPES = 'openid email'
+OIDC_STORE_ACCESS_TOKEN = True
+OIDC_STORE_ID_TOKEN = True  # Needs to be stored as it is used as id_token_hint for logout
+OIDC_EXEMPT_URLS = ['/auth']
+
+
+LOGIN_URL = 'oidc_authentication_init'
+LOGIN_REDIRECT_URL = '/ehr'
+LOGOUT_REDIRECT_URL = '/auth'
+
+GPAS_DOMAIN_NAME = os.getenv('GPAS_DOMAIN_NAME',
+    'TurboChainsaw')
+GPAS_WSDL_URL = os.getenv('GPAS_WSDL_URL',
+    'http://gpas-wildfly:8080/gpas/gpasService?wsdl')

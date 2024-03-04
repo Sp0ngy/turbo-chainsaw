@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pseudonymize Data</title>
+</head>
+<body>
+    <h2>Pseudonymize Data</h2>
+    <form method="post" action="{% url 'ehr:pseudonymize_data' %}" novalidate>
+        {% csrf_token %}
+        <div class="row g-3 mb-3">
+            <div class="col-sm-3 col-md-3">
+                {{ form.string }}
+            </div>
+            <div class="col-auto">
+                <button class="btn btn-success" type="submit">Pseudonymize</button>
+            </div>
+        </div>
+    </form>
+    <p>Pseudonymized String: {{ pseudonymized_data }}</p>
+</body>
+</html>
