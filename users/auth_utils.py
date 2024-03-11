@@ -3,9 +3,8 @@ import jwt
 import requests
 from functools import wraps
 from django_project.settings import OIDC_OP_TOKEN_ENDPOINT, OIDC_RP_CLIENT_ID
-from django_project.permissions import GlobalsScopes
+from users.scopes import GlobalsScopes
 
-from users.models import Resource
 
 def requires_scope(*required_scopes):
     """

@@ -164,6 +164,10 @@ UMA_PROTECTION_API_PERMISSION = os.getenv('UMA_PROTECTION_API_PERMISSION',
     f'{OIDC_HOST}/realms/{OIDC_REALM}/authz/protection/permission')
 UMA_PROTECTION_API_POLICY = os.getenv('UMA_PROTECTION_API_POLICY',
     f'{OIDC_HOST}/realms/{OIDC_REALM}/authz/protection/uma-policy')
+OIDC_CONSENT_ENDPOINT = os.getenv('OIDC_CONSENT_ENDPOINT',
+    f'{OIDC_HOST}/admin/realms/{OIDC_REALM}/users')
+OIDC_EXTENSION_CONSENT_ENDPOINT = os.getenv('OIDC_EXTENSION_CONSENT_ENDPOINT',
+    f'{OIDC_HOST}/realms/{OIDC_REALM}/custom-consent')
 
 OIDC_OP_LOGOUT_URL_METHOD = 'users.utils.oidc_op_logout'
 OIDC_USERNAME_ALGO = 'users.utils.generate_username'

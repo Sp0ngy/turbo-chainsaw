@@ -28,7 +28,7 @@ services:
         command:
             - start-dev
             - --import-realm
-            - --log-level=DEBUG
+            - --log-level=WARNING
         volumes:
             - ./keycloak/keycloak_data:/opt/keycloak/data
             - ./keycloak/deployment:/opt/keycloak/providers

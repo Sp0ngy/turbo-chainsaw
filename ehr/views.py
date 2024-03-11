@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from ehr.forms.forms import StringForm
 from ehr.models import Patient
 from users.models import Resource
-from django_project.permissions import GlobalsScopes as gs
+from users.scopes import GlobalsScopes as gs
 
 from users.auth_utils import has_protected_user_resource_scope, has_required_scope
 
