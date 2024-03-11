@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
-from users.pseudonyimze_utils import mask, unmask
+from users.pseudonymize_utils import mask, unmask
 from users.fields import PseudonymizedField
 
 
