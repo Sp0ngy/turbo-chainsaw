@@ -1,0 +1,42 @@
+# All dependencies that we need to build a python package go here
+# Note: Currently we do not ship a package but rather just include our django project in a docker image
+[build-system]
+requires = ["hatchling"]  # TODO: Check if we want to use hatchling
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["authormgmt", "bookstore", "users", "ehr"]
+
+# See https://packaging.python.org/en/latest/specifications
+# See https://peps.python.org/pep-0621
+[project]
+name = "turbo-chainsaw"
+version = "0.1.0" # TODO: Set this automatiaclly in release process
+description = "Technical reviews"
+requires-python = ">=3.11"
+authors = [
+    {email = "nico.schuerrle@curiescience.com"},
+    {name = "Nico Schürrle"}
+]
+maintainers = [
+    {name = "Nico Schürrle", email="nico.schuerrle@curiescience.com"}
+]
+dependencies = [
+    "Django==4.2.10",
+    "psycopg2-binary==2.9.9",
+    "zeep==4.1.0",
+    "mozilla_django_oidc==4.0.0",
+    "PyJWT==2.8.0",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-django",
+]
+dev = [
+    "turbo-chainsaw[test]"
+]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "django_project.settings" #TODO: Should this be its own django settings for test?

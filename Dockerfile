@@ -10,7 +10,9 @@ ENV PYTHONUNBUFFERED 1
 WORKDIR /code
 
 # Install dependencies
-COPY ./requirements.txt .
+RUN pip install pip-tools
+COPY ./pyproject.toml pyproject.toml
+RUN pip-compile -o requirements.txt
 RUN pip install -r requirements.txt
 
 # Copy project
