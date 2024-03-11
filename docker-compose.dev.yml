@@ -21,7 +21,7 @@ services:
         ports:
             - "8080:8080"
         environment:
-            KC_HTTP_ENABLED: true
+            KC_HTTP_ENABLED: 'true'
             KC_FEATURES: scripts,token-exchange,admin-fine-grained-authz
             KEYCLOAK_ADMIN: admin
             KEYCLOAK_ADMIN_PASSWORD: admin
