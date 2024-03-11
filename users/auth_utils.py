@@ -1,10 +1,31 @@
-from django.http import HttpResponseForbidden
 import jwt
 import requests
+import unicodedata
 from functools import wraps
-from django_project.settings import OIDC_OP_TOKEN_ENDPOINT, OIDC_RP_CLIENT_ID
+
+from django.conf import settings
+from django.http import HttpResponseForbidden
+
+from django_project.settings import OIDC_OP_TOKEN_ENDPOINT, OIDC_RP_CLIENT_ID, OIDC_RP_CLIENT_SECRET
 from users.scopes import GlobalsScopes
 
+def generate_username(email):
+    # Using Python 3 and Django 1.11, usernames can contain alphanumeric
+    # (ascii and unicode), _, @, +, . and - characters. So we normalize
+    # it and slice at 150 characters.
+    return unicodedata.normalize('NFKC', email)[:150]
+
+def oidc_op_logout(request):
+    oidc_op_logout_endpoint = settings.OIDC_OP_LOGOUT_ENDPOINT
+    # Retrieve the ID token stored in the session at login
+    id_token_hint = request.session.get('oidc_id_token')
+    # Construct the post logout redirect URI
+    post_logout_redirect_uri = request.build_absolute_uri(getattr(settings, 'LOGOUT_REDIRECT_URL', '/'))
+
+    # Construct the logout URL with the post_logout_redirect_uri and id_token_hint parameters
+    logout_url = f"{oidc_op_logout_endpoint}?post_logout_redirect_uri={post_logout_redirect_uri}&id_token_hint={id_token_hint}"
+
+    return logout_url
 
 def requires_scope(*required_scopes):
     """
@@ -193,6 +214,22 @@ def decode_jwt_token(token, audience):
     except Exception as e:
         print(f"Token validation error: {e}")
         return None
+
+def get_client_PAT_token():
+    data = {
+        'client_id': OIDC_RP_CLIENT_ID,
+        'client_secret': OIDC_RP_CLIENT_SECRET,
+        'grant_type': 'client_credentials'
+    }
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+
+    try:
+        response = requests.post(OIDC_OP_TOKEN_ENDPOINT, data=data, headers=headers)
+        pat = response.json()['access_token']
+    except Exception as e:
+        raise Exception(f"Failed to obtain access token: {e}")
+
+    return pat
 
 
 

@@ -170,8 +170,8 @@ OIDC_CONSENT_ENDPOINT = os.getenv('OIDC_CONSENT_ENDPOINT',
 OIDC_EXTENSION_CONSENT_ENDPOINT = os.getenv('OIDC_EXTENSION_CONSENT_ENDPOINT',
     f'{OIDC_HOST}/realms/{OIDC_REALM}/custom-consent')
 
-OIDC_OP_LOGOUT_URL_METHOD = 'users.utils.oidc_op_logout'
-OIDC_USERNAME_ALGO = 'users.utils.generate_username'
+OIDC_OP_LOGOUT_URL_METHOD = 'users.auth_utils.oidc_op_logout'
+OIDC_USERNAME_ALGO = 'users.auth_utils.generate_username'
 OIDC_RP_SIGN_ALGO = 'RS256'
 OIDC_RP_SCOPES = 'openid email'
 OIDC_STORE_ACCESS_TOKEN = True

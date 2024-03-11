@@ -1,7 +1,7 @@
 import requests
 from django_project.settings import OIDC_RP_CLIENT_ID, OIDC_EXTENSION_CONSENT_ENDPOINT, OIDC_CONSENT_ENDPOINT
 
-from users.utils import get_client_PAT_token
+from users.auth_utils import get_client_PAT_token
 from users.scopes import ConsentScopes as cs
 
 def get_user_consent(user_id):
