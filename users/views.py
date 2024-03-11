@@ -3,6 +3,7 @@ from django.shortcuts import render
 
 from users.consent_utils import get_user_consent, update_user_consent
 from users.scopes import ConsentScopes as cs
+from users.auth_utils import decode_jwt_token
 
 def show_username(request):
     # Get the username of the authenticated user
@@ -19,6 +20,9 @@ def login_logout(request):
 
 def consent(request):
     context = {"tos_accepted": False, "marketing_accepted": False}
+    user_access_token = request.session.get('oidc_access_token')
+    claims = decode_jwt_token(user_access_token, 'account')
+    user_id = claims.get("sub")
 
     if request.method == 'POST':
         granted_consents = []
@@ -32,12 +36,11 @@ def consent(request):
         context["tos_accepted"] = 'tos_accepted' in request.POST
         context["marketing_accepted"] = 'marketing_accepted' in request.POST
 
-        update_user_consent(request, granted_consents)
-        # Update the consent in Keycloak
+        update_user_consent(granted_consents, user_id)
+
 
     else:
-        granted_consents = get_user_consent(request)
-        # Update context based on granted_consents
+        granted_consents = get_user_consent(user_id)
         if cs.TOS_ACCEPTED_V1_0 in granted_consents:
             context["tos_accepted"] = True
         if cs.MARKETING_ACCEPTED_V1_0 in granted_consents:

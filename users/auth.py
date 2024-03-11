@@ -6,7 +6,8 @@ from mozilla_django_oidc import auth
 
 from ehr.models import Patient
 from users.models import Resource
-
+from users.consent_utils import update_user_consent
+from users.scopes import ConsentScopes as cs
 
 class OIDCAuthenticationBackend(auth.OIDCAuthenticationBackend):
 
@@ -27,6 +28,8 @@ class OIDCAuthenticationBackend(auth.OIDCAuthenticationBackend):
         resource_id = create_resource(user)
         save_resource_in_db(user, resource_id, Resource.ResourceTypes.PATIENT_PROFILE)
         user.save()
+        # Update User Consent for Terms of Service (implicitly accepted through sign-up mask with TOS validation)
+        update_user_consent([cs.TOS_ACCEPTED_V1_0.value], user_id=keycloak_id)
         self._assign_roles_to_user(user, claims)
         self.update_groups(user, claims)
         return user

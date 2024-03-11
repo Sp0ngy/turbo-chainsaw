@@ -5,22 +5,14 @@ from users.utils import get_client_PAT_token
 from users.auth_utils import decode_jwt_token
 from users.scopes import ConsentScopes as cs
 
-def get_user_consent(request):
-    user_access_token = request.session.get('oidc_access_token')
-    claims = decode_jwt_token(user_access_token, 'account')
-    user_id = claims.get("sub")
-
+def get_user_consent(user_id):
     PAT_token = get_client_PAT_token()
     response = get_consent_records(PAT_token, user_id).json()
     grantedClientScopes = filter_granted_client_scopes(response, OIDC_RP_CLIENT_ID)
 
     return grantedClientScopes
 
-def update_user_consent(request, granted_consents):
-    user_access_token = request.session.get('oidc_access_token')
-    claims = decode_jwt_token(user_access_token, 'account')
-    user_id = claims.get("sub")
-
+def update_user_consent(granted_consents, user_id):
     PAT_token = get_client_PAT_token()
     update_consent_records(PAT_token, user_id, granted_consents)
 
