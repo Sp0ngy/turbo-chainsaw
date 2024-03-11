@@ -10,4 +10,5 @@ class GlobalsScopes(Enum):
 
 class ConsentScopes(Enum):
     TOS_ACCEPTED_V1_0 = 'tos-accepted-v1.0'
+    DATA_PROCESSING_ACCEPTED_V1_0 = 'data-processing-accepted-v1.0'
     MARKETING_ACCEPTED_V1_0 = 'marketing-accepted-v1.0'
