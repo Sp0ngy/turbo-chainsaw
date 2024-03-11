@@ -1,8 +1,7 @@
 import requests
-from django_project.settings import OIDC_HOST, OIDC_REALM, OIDC_RP_CLIENT_ID, OIDC_EXTENSION_CONSENT_ENDPOINT, OIDC_CONSENT_ENDPOINT
+from django_project.settings import OIDC_RP_CLIENT_ID, OIDC_EXTENSION_CONSENT_ENDPOINT, OIDC_CONSENT_ENDPOINT
 
 from users.utils import get_client_PAT_token
-from users.auth_utils import decode_jwt_token
 from users.scopes import ConsentScopes as cs
 
 def get_user_consent(user_id):
@@ -15,6 +14,7 @@ def get_user_consent(user_id):
 def update_user_consent(granted_consents, user_id):
     PAT_token = get_client_PAT_token()
     update_consent_records(PAT_token, user_id, granted_consents)
+    # Issue new access token
 
 def get_consent_records(access_token, user_id):
     """
@@ -30,7 +30,6 @@ def get_consent_records(access_token, user_id):
     }
     response = requests.get(url, headers=headers)
     return response
-
 
 def update_consent_records(access_token, user_id, granted_consents):
     url = f"{OIDC_EXTENSION_CONSENT_ENDPOINT}/{user_id}/consents"

@@ -1,3 +1,4 @@
+import time
 from django.http import HttpResponse
 from django.shortcuts import render
 
@@ -37,6 +38,7 @@ def consent(request):
         context["marketing_accepted"] = 'marketing_accepted' in request.POST
 
         update_user_consent(granted_consents, user_id)
+        request.session['oidc_id_token_expiration'] = time.time() - 1  # Set to past to refresh the access token
 
 
     else:
