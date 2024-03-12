@@ -4,3 +4,4 @@ __pycache__/
 db.sqlite3
 /keycloak/keycloak_data/
 /keycloak_public_key.pem
+/requirements.txt

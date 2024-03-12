@@ -1,0 +1,400 @@
+{
+  "allowRemoteResourceManagement": true,
+  "policyEnforcementMode": "ENFORCING",
+  "resources": [
+    {
+      "name": "Default Resource",
+      "type": "urn:turbo:resources:default",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "74c00f09-bdf6-4bd9-a7a1-df4dc5d77094",
+      "uris": [
+        "/*"
+      ]
+    },
+    {
+      "name": "Staff-Portal",
+      "ownerManagedAccess": false,
+      "displayName": "",
+      "attributes": {},
+      "_id": "46d1b4e9-bf87-4c3c-84fc-20d0a408fcdf",
+      "uris": [
+        "/ehr/*"
+      ],
+      "scopes": [
+        {
+          "name": "staff-portal.write"
+        },
+        {
+          "name": "staff-portal.read"
+        }
+      ],
+      "icon_uri": ""
+    },
+    {
+      "name": "Patient-Profile",
+      "type": "urn:turbo:resources:patient-profile",
+      "ownerManagedAccess": true,
+      "displayName": "Patient Profile",
+      "attributes": {},
+      "_id": "7361dca7-3e4d-4eea-a66b-3fb0243bebea",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "patient-profile.write"
+        },
+        {
+          "name": "patient-profile.read"
+        }
+      ],
+      "icon_uri": ""
+    },
+    {
+      "name": "Patient-Profile-56f0a1ab-6c73-465c-96ea-ce3d17428781",
+      "type": "urn:turbo:resources:patient-profile",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "6fc923bd-8c71-4074-ae25-0f630be121fa",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "patient-profile.write"
+        },
+        {
+          "name": "patient-profile.read"
+        }
+      ]
+    },
+    {
+      "name": "Patient-Profile-P16-267299fd-a061-4e2e-a175-f83a2d1515bb",
+      "type": "urn:turbo:resources:patient-profile",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "7ae0a685-940e-425c-aecf-dbed4cc9bd77",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "patient-profile.write"
+        },
+        {
+          "name": "patient-profile.read"
+        }
+      ]
+    },
+    {
+      "name": "Patient-Profile-P17-1b053bbb-1d12-46bf-abb9-c1411a087b24",
+      "type": "urn:turbo:resources:patient-profile",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "24aefad8-db2c-4ea5-8451-e6c26cf4878e",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "patient-profile.write"
+        },
+        {
+          "name": "patient-profile.read"
+        }
+      ]
+    },
+    {
+      "name": "Patient-Profile-P18-86ddd477-a536-471b-94ff-b7a4ff7cf529",
+      "type": "urn:turbo:resources:patient-profile",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "f45cf517-2658-4dfa-a85d-5d56ab5fde64",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "patient-profile.write"
+        },
+        {
+          "name": "patient-profile.read"
+        }
+      ]
+    },
+    {
+      "name": "Patient-Profile-P19-4230e7b0-371e-4407-adb1-ab625b694167",
+      "type": "urn:turbo:resources:patient-profile",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "26febc0a-5aab-41e1-9004-94c3291b0a74",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "patient-profile.write"
+        },
+        {
+          "name": "patient-profile.read"
+        }
+      ]
+    },
+    {
+      "name": "Patient-Profile-P20-0d01fcae-3ce5-4d38-a2ac-895ccc60f7c0",
+      "type": "urn:turbo:resources:patient-profile",
+      "ownerManagedAccess": false,
+      "attributes": {},
+      "_id": "601e70a9-7407-4073-bfc1-5cbb7652a765",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "patient-profile.write"
+        },
+        {
+          "name": "patient-profile.read"
+        }
+      ]
+    },
+    {
+      "name": "Patient-Profile-P21-135f2a05-4abe-45d8-afd8-2a426795b310",
+      "type": "urn:turbo:resources:patient-profile",
+      "ownerManagedAccess": false,
+      "displayName": "",
+      "attributes": {
+        "associated_user_id": [
+          "135f2a05-4abe-45d8-afd8-2a426795b310"
+        ]
+      },
+      "_id": "8ba2a6f4-d20f-4387-9cea-eaab6c4de170",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "patient-profile.write"
+        },
+        {
+          "name": "patient-profile.read"
+        }
+      ],
+      "icon_uri": ""
+    },
+    {
+      "name": "Patient-Profile-P23-4934d179-1de9-40ee-a02e-64a7932338a3",
+      "type": "urn:turbo:resources:patient-profile",
+      "ownerManagedAccess": false,
+      "displayName": "",
+      "attributes": {
+        "associated_user_id": [
+          "4934d179-1de9-40ee-a02e-64a7932338a3"
+        ]
+      },
+      "_id": "20fd2e37-2b61-4627-b227-3e195099a89e",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "patient-profile.write"
+        },
+        {
+          "name": "patient-profile.read"
+        }
+      ],
+      "icon_uri": ""
+    },
+    {
+      "name": "Patient-Profile-P24-1d3509e4-a7e6-439f-a96d-99fbe3d76d7e",
+      "type": "urn:turbo:resources:patient-profile",
+      "ownerManagedAccess": false,
+      "attributes": {
+        "associated_user_id": [
+          "1d3509e4-a7e6-439f-a96d-99fbe3d76d7e"
+        ]
+      },
+      "_id": "7f6ae36f-43c5-45cc-b8c3-8eb8156fbd95",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "patient-profile.write"
+        },
+        {
+          "name": "patient-profile.read"
+        }
+      ]
+    },
+    {
+      "name": "Patient-Profile-P25-eb6b3113-feb1-4f9b-9d07-0cd4505fe301",
+      "type": "urn:turbo:resources:patient-profile",
+      "ownerManagedAccess": false,
+      "attributes": {
+        "associated_user_id": [
+          "eb6b3113-feb1-4f9b-9d07-0cd4505fe301"
+        ]
+      },
+      "_id": "c0fd4d07-d78e-4763-8ddd-2d4b4ea16925",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "patient-profile.write"
+        },
+        {
+          "name": "patient-profile.read"
+        }
+      ]
+    },
+    {
+      "name": "Patient-Profile-P26-d7cd9fb9-7641-4675-9a65-9fa4ae490813",
+      "type": "urn:turbo:resources:patient-profile",
+      "ownerManagedAccess": false,
+      "attributes": {
+        "associated_user_id": [
+          "d7cd9fb9-7641-4675-9a65-9fa4ae490813"
+        ]
+      },
+      "_id": "12610f68-366c-4310-80a9-79ee09226bbb",
+      "uris": [],
+      "scopes": [
+        {
+          "name": "patient-profile.write"
+        },
+        {
+          "name": "patient-profile.read"
+        }
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "id": "42b1b84d-7c88-4936-8d42-26cdc0a1059e",
+      "name": "Default Policy",
+      "description": "A policy that grants access only for users within this realm",
+      "type": "js",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "code": "// by default, grants any permission associated with this policy\n$evaluation.grant();\n"
+      }
+    },
+    {
+      "id": "3ef5582d-43ec-46ea-9d82-c47c23f6634c",
+      "name": "is_admin",
+      "description": "",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[{\"id\":\"admin\",\"required\":false}]"
+      }
+    },
+    {
+      "id": "cf74df74-9d6b-411f-819a-af0583f37f00",
+      "name": "is_staff",
+      "description": "",
+      "type": "role",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "roles": "[{\"id\":\"turbo/staff\",\"required\":false}]"
+      }
+    },
+    {
+      "id": "e2bef917-9d83-4100-8918-b77335a6f8e2",
+      "name": "has_user_id_in_attribute",
+      "description": "",
+      "type": "script-hasAttributeAssociatedUserId.js",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {}
+    },
+    {
+      "id": "322993da-d1c2-4bbb-86d0-f803337de106",
+      "name": "Default Permission",
+      "description": "A permission that applies to the default resource type",
+      "type": "resource",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "defaultResourceType": "urn:turbo:resources:default",
+        "applyPolicies": "[\"Default Policy\"]"
+      }
+    },
+    {
+      "id": "63f4cba1-1a4d-46bc-96a3-87b95e50509b",
+      "name": "patient-profile-READ-permission",
+      "description": "",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "defaultResourceType": "urn:turbo:resources:patient-profile",
+        "applyPolicies": "[\"is_staff\",\"has_user_id_in_attribute\",\"is_admin\"]",
+        "scopes": "[\"patient-profile.read\"]"
+      }
+    },
+    {
+      "id": "739bb86b-63d4-43f4-ab5c-8aad1ce1cddb",
+      "name": "patient-profile-WRITE-permission",
+      "description": "",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "defaultResourceType": "urn:turbo:resources:patient-profile",
+        "applyPolicies": "[\"is_staff\",\"has_user_id_in_attribute\",\"is_admin\"]",
+        "scopes": "[\"patient-profile.write\"]"
+      }
+    },
+    {
+      "id": "217acde3-0623-4522-bbe3-ed7f68b523b2",
+      "name": "staff-portal-READ-permission",
+      "description": "",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"Staff-Portal\"]",
+        "scopes": "[\"staff-portal.read\"]",
+        "applyPolicies": "[\"is_staff\",\"is_admin\"]"
+      }
+    },
+    {
+      "id": "98552e3d-3f31-4d7e-a46b-67719093ee5d",
+      "name": "staff-portal-WRITE-permission",
+      "description": "",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"Staff-Portal\"]",
+        "scopes": "[\"staff-portal.write\"]",
+        "applyPolicies": "[\"is_staff\",\"is_admin\"]"
+      }
+    },
+    {
+      "id": "64f3f9d7-fcb5-4a26-83a1-14502d5478f3",
+      "name": "tos-accepted",
+      "description": "",
+      "type": "scope",
+      "logic": "POSITIVE",
+      "decisionStrategy": "UNANIMOUS",
+      "config": {
+        "scopes": "[\"tos-accepted-v1.0\"]"
+      }
+    }
+  ],
+  "scopes": [
+    {
+      "id": "7da365fd-7c34-49b6-97bf-1bfc0b8098ca",
+      "name": "staff-portal.read",
+      "iconUri": ""
+    },
+    {
+      "id": "32079309-8201-4ceb-8d5e-b525bd77b2ed",
+      "name": "staff-portal.write",
+      "iconUri": ""
+    },
+    {
+      "id": "c6873244-0fb1-468d-b66a-cc1cd82d5ec7",
+      "name": "patient-profile.read",
+      "iconUri": ""
+    },
+    {
+      "id": "ffeb6968-cae7-4dc0-a743-1e93da631cd6",
+      "name": "patient-profile.write",
+      "iconUri": ""
+    },
+    {
+      "id": "258b1bc7-cc48-4ddd-8cc9-ddf51dbc2455",
+      "name": "tos-accepted-v1.0",
+      "iconUri": ""
+    }
+  ],
+  "decisionStrategy": "UNANIMOUS"
+}

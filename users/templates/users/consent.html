@@ -1,0 +1,12 @@
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <label for="tos-accepted">Accept Terms of Service:</label>
+        <input type="checkbox" id="tos-accepted" name="tos_accepted" value="yes" {% if tos_accepted %}checked{% endif %}><br><br>
+
+        <label for="marketing-accepted">Accept Marketing Communications:</label>
+        <input type="checkbox" id="marketing-accepted" name="marketing_accepted" value="yes" {% if marketing_accepted %}checked{% endif %}><br><br>
+
+        <button type="submit">Submit Consent</button>
+    </form>
+</body>

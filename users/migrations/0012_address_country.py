@@ -3,7 +3,7 @@
 from django.db import migrations
 import django.db.models.fields
 import users.fields
-import users.utils
+import users.pseudonymize_utils
 
 
 class Migration(migrations.Migration):
@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='address',
             name='country',
-            field=users.fields.PseudonymizedField(choices=[('', '-----'), ('DE', 'Germany'), ('TR', 'Turkey'), ('TRNC', 'Turkish Republic of North Cyprus'), ('CY', 'Cyprus'), ('BE', 'Belgium'), ('DK', 'Denmark'), ('FR', 'France'), ('LU', 'Luxembourg'), ('NL', 'Netherlands'), ('AT', 'Austria'), ('CZ', 'Czech Republic'), ('PL', 'Poland'), ('CH', 'Switzerland'), ('LI', 'Liechtenstein')], default='DE', field_type=django.db.models.fields.CharField, max_length=100, methods=(users.utils.mask, users.utils.unmask)),
+            field=users.fields.PseudonymizedField(choices=[('', '-----'), ('DE', 'Germany'), ('TR', 'Turkey'), ('TRNC', 'Turkish Republic of North Cyprus'), ('CY', 'Cyprus'), ('BE', 'Belgium'), ('DK', 'Denmark'), ('FR', 'France'), ('LU', 'Luxembourg'), ('NL', 'Netherlands'), ('AT', 'Austria'), ('CZ', 'Czech Republic'), ('PL', 'Poland'), ('CH', 'Switzerland'), ('LI', 'Liechtenstein')], default='DE', field_type=django.db.models.fields.CharField, max_length=100, methods=(users.pseudonymize_utils.mask, users.pseudonymize_utils.unmask)),
             preserve_default=False,
         ),
     ]

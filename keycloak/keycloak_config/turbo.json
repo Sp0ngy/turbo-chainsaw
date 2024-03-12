@@ -31,8 +31,10 @@
     "oidc.ciba.grant.enabled": "false",
     "client.secret.creation.time": "1708075642",
     "backchannel.logout.session.required": "true",
+    "consent.screen.text": "TEST CONSENT",
+    "login_theme": "keycloak",
     "oauth2.device.authorization.grant.enabled": "false",
-    "display.on.consent.screen": "false",
+    "display.on.consent.screen": "true",
     "backchannel.logout.revoke.offline.tokens": "false"
   },
   "authenticationFlowBindingOverrides": {},
@@ -70,6 +72,19 @@
       }
     },
     {
+      "name": "Consent Mapper",
+      "protocol": "openid-connect",
+      "protocolMapper": "oidc-consent-mapper",
+      "consentRequired": false,
+      "config": {
+        "id.token.claim": "true",
+        "access.token.claim": "true",
+        "introspection.token.claim": "true",
+        "claim.name": "consent",
+        "userinfo.token.claim": "true"
+      }
+    },
+    {
       "name": "Client ID",
       "protocol": "openid-connect",
       "protocolMapper": "oidc-usersessionmodel-note-mapper",
@@ -90,13 +105,16 @@
     "acr",
     "profile",
     "roles",
-    "email"
+    "email",
+    "patient-profile-access"
   ],
   "optionalClientScopes": [
     "address",
     "phone",
+    "tos-accepted-v1.0",
     "offline_access",
-    "microprofile-jwt"
+    "microprofile-jwt",
+    "marketing-accepted-v1.0"
   ],
   "access": {
     "view": true,
