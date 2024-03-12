@@ -8,7 +8,7 @@ from ehr.models import Patient
 from users.models import Resource
 from users.scopes import GlobalsScopes as gs
 
-from users.auth_utils import has_protected_user_resource_scope, has_required_scope
+from users.auth_utils import has_required_scope
 
 gPAS_domain_name = 'TurboChainsaw'
 
@@ -26,7 +26,7 @@ def patient_profile(request):
     except Resource.DoesNotExist:
         raise Http404("This User has no Patient Profile.")
 
-    is_authorized, message = has_protected_user_resource_scope(request, [gs.PATIENT_PROFILE_READ, gs.PATIENT_PROFILE_WRITE], keycloak_resource_id)
+    is_authorized, message = has_required_scope(request, [gs.PATIENT_PROFILE_READ, gs.PATIENT_PROFILE_WRITE], keycloak_resource_id)
     if not is_authorized:
         return HttpResponseForbidden(message)
 
@@ -40,7 +40,7 @@ def patient_profile(request):
 
 @login_required
 def pseudonymize_data(request):
-    is_authorized, message = has_required_scope(request,[gs.STAFF_PORTAL_READ, gs.STAFF_PORTAL_WRITE])
+    is_authorized, message = has_required_scope(request, [gs.STAFF_PORTAL_READ, gs.STAFF_PORTAL_WRITE])
     if not is_authorized:
         return HttpResponseForbidden(message)
 
@@ -75,7 +75,7 @@ def pseudonymize_data(request):
 
 @login_required
 def de_pseudonymize_data(request):
-    is_authorized, message = has_required_scope(request,[gs.STAFF_PORTAL_READ, gs.STAFF_PORTAL_WRITE])
+    is_authorized, message = has_required_scope(request, [gs.STAFF_PORTAL_READ, gs.STAFF_PORTAL_WRITE])
     if not is_authorized:
         return HttpResponseForbidden(message)
 

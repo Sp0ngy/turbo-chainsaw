@@ -6,7 +6,7 @@ from users.scopes import ConsentScopes as cs
 
 def get_user_consent(user_id):
     PAT_token = get_client_PAT_token()
-    response = get_consent_records(PAT_token, user_id).json()
+    response = get_consent_records(PAT_token, user_id)
     grantedClientScopes = filter_granted_client_scopes(response, OIDC_RP_CLIENT_ID)
 
     return grantedClientScopes
@@ -29,7 +29,7 @@ def get_consent_records(access_token, user_id):
         'Content-Type': 'application/json'
     }
     response = requests.get(url, headers=headers)
-    return response
+    return response.json()
 
 def update_consent_records(access_token, user_id, granted_consents):
     url = f"{OIDC_EXTENSION_CONSENT_ENDPOINT}/{user_id}/consents"

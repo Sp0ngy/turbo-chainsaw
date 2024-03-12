@@ -7,6 +7,10 @@ from users.auth_utils import decode_jwt_token
 from users.scopes import ConsentScopes as cs
 
 class ConsentCheckMiddleware(MiddlewareMixin):
+    """
+    Middleware which checks the consent claim within the access token.
+    """
+
     def process_request(self, request):
         # Define all Exempt-URLs
         if request.path.startswith('/auth'):
@@ -29,12 +33,15 @@ class ConsentCheckMiddleware(MiddlewareMixin):
         user_has_consented = self.check_TOS_consent(request)
 
         if not user_has_consented:
-            #TODO: Redirect to consent page
+            #TODO: Redirect to consent page and raise Alert
             return HttpResponseForbidden("You must accept the terms of service to proceed.")
 
         return None
 
     def check_TOS_consent(self, request):
+        """
+        Check for Terms of Service consent.
+        """
         user_access_token = request.session.get('oidc_access_token')
         claims = decode_jwt_token(user_access_token, 'account')
         consents = claims.get("consent")
